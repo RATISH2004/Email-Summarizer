@@ -1,10 +1,10 @@
-# Gmail Intelligent Processor 🤖📧
+# Gmail Intelligent Processor (E-mail Summarizer) 🤖📧
 
-An AI-powered Gmail email processing application that automatically categorizes, summarizes, and extracts deadlines from your emails using Google Gemini AI.
+An AI-powered Gmail email processing application that automatically categorizes, summarizes, and extracts deadlines from your emails using Locally hosted LLM/ LLM API (you just need to modify the keys and redirect links).
 
 ## Features ✨
 
-- **AI-Powered Classification**: Automatically categorizes emails into VERY_IMPORTANT, IMPORTANT, UNIMPORTANT, or SPAM
+- **AI-Powered Classification**: Automatically categorizes emails into VERY_IMPORTANT, IMPORTANT, UNIMPORTANT, or SPAM based on user
 - **Smart Summarization**: Generates concise 2-3 sentence summaries of email content
 - **Deadline Extraction**: Automatically identifies and extracts deadlines from emails
 - **Real-time Filtering**: Filter emails by importance level and deadline presence
@@ -50,7 +50,7 @@ pip install -r requirements.txt
    - Rename the downloaded file to `credentials.json`
    - Place it in the `credentials/` folder of this project
 
-### Step 4: Set Up Google Gemini API
+### Step 4: Set Up Google Gemini API 
 
 1. **Go to Google AI Studio**: https://aistudio.google.com/
 2. **Get API Key**:
@@ -63,6 +63,102 @@ pip install -r requirements.txt
    ```
    GOOGLE_API_KEY=your_gemini_api_key_here
    ```
+### Step 4A: Set Up Local LLM API (Alternative to Gemini)
+
+If you want to run an LLM locally instead of using Google Gemini, follow these steps:
+
+#### 1. **Choose a Local LLM Platform**
+
+Popular options:
+- [Ollama](https://ollama.com/) (Windows, macOS, Linux)
+- [LM Studio](https://lmstudio.ai/) (Windows, macOS)
+- [Open WebUI](https://github.com/open-webui/open-webui) (Docker, cross-platform)
+
+#### 2. **Install the Platform**
+
+**For Ollama:**
+```bash
+# macOS
+brew install ollama
+
+# Windows/Linux
+# Download the installer from https://ollama.com/download
+```
+**For LM Studio:**  
+Download and install from [lmstudio.ai](https://lmstudio.ai/).
+
+#### 3. **Download a Model**
+
+For example, to use Gemma 2B (or any supported model) with Ollama:
+```bash
+ollama pull gemma:2b
+```
+Or use another model, e.g., `llama3`, `mistral`, etc.
+
+#### 4. **Start the LLM API Server**
+
+**Ollama:**
+```bash
+ollama serve
+```
+- By default, Ollama exposes a REST API at `http://localhost:11434/v1/chat/completions`.
+
+**LM Studio:**
+- Open LM Studio, go to the "API Server" tab, and start the server.
+- Note the API endpoint (usually `http://localhost:1234/v1/chat/completions`).
+
+#### 5. **Get Your Local API Reference Key**
+
+- Most local LLMs (like Ollama and LM Studio) do **not** require an API key by default for local access.
+- If you want to secure your API, check the platform’s docs for authentication options.
+
+#### 6. **Configure the Application to Use Local LLM**
+
+- In your `.env` file, add:
+  ```
+  LLM_API_BASE_URL=http://localhost:11434/v1
+  LLM_MODEL=gemma:2b
+  ```
+  (Adjust the model and port as needed.)
+
+- In your Python code (e.g., `src/llm_service.py`), use the local API endpoint:
+  ```python
+  import os
+  import requests
+
+  LLM_API_BASE_URL = os.getenv("LLM_API_BASE_URL", "http://localhost:11434/v1")
+  LLM_MODEL = os.getenv("LLM_MODEL", "gemma:2b")
+
+  def query_local_llm(prompt):
+      url = f"{LLM_API_BASE_URL}/chat/completions"
+      payload = {
+          "model": LLM_MODEL,
+          "messages": [{"role": "user", "content": prompt}],
+      }
+      response = requests.post(url, json=payload)
+      response.raise_for_status()
+      return response.json()["choices"][0]["message"]["content"]
+  ```
+
+#### 7. **Test Your Local LLM Integration**
+
+- Run a test script or use your app to ensure responses are coming from the local LLM.
+
+---
+
+## Full Example: Merged into Setup Instructions
+
+## Quick Reference Table
+
+| Platform   | API Base URL                  | API Key Needed? | How to Launch         |
+|------------|-------------------------------|-----------------|----------------------|
+| Ollama     | http://localhost:11434/v1     | No              | `ollama serve`       |
+| LM Studio  | http://localhost:1234/v1      | No              | Start in app         |
+| Open WebUI | (as configured)               | Optional        | `docker-compose up`  |
+
+---
+
+**Now you can use either Google Gemini or your own locally hosted LLM for smart Gmail processing!**
 
 ### Step 5: Run the Application
 
