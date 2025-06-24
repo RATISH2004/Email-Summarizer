@@ -1,7 +1,7 @@
 # InboxIntel : Gmail Intelligent Processor (E-mail Summarizer) 🤖📧
 
 An AI-powered Gmail email processing application that automatically categorizes, summarizes, and extracts deadlines from your emails using Locally hosted LLM/ LLM API (you just need to modify the keys and redirect links).
-
+(Done @ NUS, SIngapre, during the programme GAIP - July, 2025, Organized by Corporate Gurukul)
 ## Features ✨
 
 - **AI-Powered Classification**: Automatically categorizes emails into VERY_IMPORTANT, IMPORTANT, UNIMPORTANT, or SPAM based on user
