@@ -1,9 +1,0 @@
-google-auth-oauthlib
-google-auth-httplib2
-google-api-python-client
-python-dotenv
-sqlalchemy
-flask
-python-dateutil
-requests
-google-generativeai 
