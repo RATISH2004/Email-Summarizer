@@ -1,4 +1,4 @@
-# Gmail Intelligent Processor (E-mail Summarizer) 🤖📧
+# InboxIntel : Gmail Intelligent Processor (E-mail Summarizer) 🤖📧
 
 An AI-powered Gmail email processing application that automatically categorizes, summarizes, and extracts deadlines from your emails using Locally hosted LLM/ LLM API (you just need to modify the keys and redirect links).
 
@@ -268,6 +268,12 @@ If you encounter any issues:
 
 This project is for educational and personal use. Please respect Gmail's Terms of Service and Google's API usage policies.
 
----
+## Authors
 
-**Happy Email Processing! 🎉**
+- Group 7 : GAIP Advanced
+     - Ratish R A
+     - Ashman Sodhi
+     - Adway Aghor
+     - Tarun
+     - Himanshu Pendyala
+- GAIP Advanced June 2025, Corporate Gurukul, National University of Singapore
